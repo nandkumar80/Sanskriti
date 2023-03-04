@@ -1,0 +1,64 @@
+---
+- name: Server reports
+  hosts: all
+  gather_facts: true
+  vars:
+    #email settings
+    email_subject: Server Last Reboot Report
+    email_host: smtp.office365.com
+    email_from: nandkumar.panchal@synechron.com
+    email_to: nandkumar.panchal@synechron.com
+
+    #random settings
+    csv_path: /tmp
+    csv_filename: report.csv
+    headers: Hostname,Distro Ver,Kernel Ver,Last Rebooted,Date
+
+  tasks:
+    - name: Gather last reboot
+      ansible.builtin.shell: last reboot | grep -m1 "" | awk '{ print $1, $6, $7, $8 }'
+      register: rebooted
+
+    - name: Gather server Date
+      ansible.builtin.shell: date
+      register: Date
+
+
+    - name: Save CSV headers
+      ansible.builtin.lineinfile:
+        dest: "{{ csv_path }}/{{ csv_filename }}"
+        line: "{{ headers }}"
+        create: true
+        state: present
+      delegate_to: localhost
+      run_once: true
+ 
+    - name: Build out CSV file
+      ansible.builtin.lineinfile:
+        dest: "{{ csv_path }}/{{ csv_filename }}"
+        line: "{{ ansible_hostname }},{{ ansible_distribution_version }},{{ ansible_kernel }},{{ rebooted.stdout }},{{ Date.stdout }}"
+        create: true
+        state: present
+      delegate_to: localhost
+
+    - name: Read in CSV to variable
+      community.general.read_csv:
+        path: "{{ csv_path }}/{{ csv_filename }}"
+      register: csv_file
+      delegate_to: localhost
+      run_once: true
+
+    - name: Send Email
+      community.general.mail:
+        host: "{{ email_host }}"
+        username: nandkumar.panchal@synechron.com
+        password: cyyvsqrxntlggwqh
+        from: "{{ email_from }}"
+        port: 587
+        to: "{{ email_to }}"
+        subject: "[Ansible] {{ email_subject }}"
+        body: "{{ lookup('template', 'report.html.j2') }}"
+        attach: "{{ csv_path }}/{{ csv_filename }}"
+        subtype: html
+      delegate_to: localhost
+      run_once: true
