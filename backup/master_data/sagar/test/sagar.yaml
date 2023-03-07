@@ -6,7 +6,7 @@
     #email settings
     email_subject: Patching Report
     email_host: smtp.gmail.com
-    email_from: npanchal2589@gmail.com
+    email_from: xyz@gmail.com@gmail.com
     email_to: dhiraj.ele@gmail.com
 
     #random settings
@@ -46,8 +46,8 @@
     - name: Send Email
       community.general.mail:
         host: "{{ email_host }}"
-        username: npanchal2589@gmail.com
-        password: luiyuwwfbllbmilc
+        username: xyz@gmail.com@gmail.com
+        password: c
         from: "{{ email_from }}"
         port: 587
         to: "{{ email_to }}"
