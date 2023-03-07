@@ -6,8 +6,8 @@
     #email settings
     email_subject: Server Last Reboot Report
     email_host: smtp.office365.com
-    email_from: nandkumar.panchal@synechron.com
-    email_to: nandkumar.panchal@synechron.com
+    email_from: xyz@gmail.com
+    email_to: xyz@gmail.com
 
     #random settings
     csv_path: /tmp
@@ -51,8 +51,8 @@
     - name: Send Email
       community.general.mail:
         host: "{{ email_host }}"
-        username: nandkumar.panchal@synechron.com
-        password: cyyvsqrxntlggwqh
+        username: xyz@gmail.com
+        password: s
         from: "{{ email_from }}"
         port: 587
         to: "{{ email_to }}"
