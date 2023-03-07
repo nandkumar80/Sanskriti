@@ -6,8 +6,8 @@
     #email settings
     email_subject: Patching Report
     email_host: smtp.office365.com
-    email_from: nandkumar.panchal@synechron.com
-    email_to: nandkumar.panchal@synechron.com
+    email_from: xyz@gmail.com
+    email_to: xyz@gmail.com
 
     #random settings
     csv_path: /tmp
@@ -47,8 +47,8 @@
       community.general.mail:
         host: "{{ email_host }}"
         port: 587
-        username: "nandkumar.panchal@synechron.com"
-        password: "Welcome#1"
+        username: "zyx@gmail.com"
+        password: 
         from: "{{ email_from }}"
         to: "{{ email_to }}"
         subject: "[Ansible] {{ email_subject }}"
