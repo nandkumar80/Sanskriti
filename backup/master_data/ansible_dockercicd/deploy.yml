@@ -1,7 +1,0 @@
----
-- hosts: all
-  become: yes
-  tasks:
-    - name: deploying war file into tomcat of anisble nodes
-      copy: src=./webapp.war dest=/opt/tomcat8/webapps
-
